@@ -487,13 +487,25 @@ static void sd_update_bus_speed_mode(struct mmc_card *card)
 	if ((card->host->caps & MMC_CAP_UHS_SDR104) &&
 	    (card->sw_caps.sd3_bus_mode & SD_MODE_UHS_SDR104)) {
 			card->sd_bus_speed = UHS_SDR104_BUS_SPEED;
+	/**/
+	#ifdef ORG_VER
 	} else if ((card->host->caps & MMC_CAP_UHS_DDR50) &&
 		   (card->sw_caps.sd3_bus_mode & SD_MODE_UHS_DDR50)) {
 			card->sd_bus_speed = UHS_DDR50_BUS_SPEED;
+	#endif
+	/**/
 	} else if ((card->host->caps & (MMC_CAP_UHS_SDR104 |
 		    MMC_CAP_UHS_SDR50)) && (card->sw_caps.sd3_bus_mode &
 		    SD_MODE_UHS_SDR50)) {
 			card->sd_bus_speed = UHS_SDR50_BUS_SPEED;
+	/**/
+	#ifdef ORG_VER
+	#else
+        } else if ((card->host->caps & MMC_CAP_UHS_DDR50) &&
+                   (card->sw_caps.sd3_bus_mode & SD_MODE_UHS_DDR50)) {
+                        card->sd_bus_speed = UHS_DDR50_BUS_SPEED;
+        #endif
+        /**/
 	} else if ((card->host->caps & (MMC_CAP_UHS_SDR104 |
 		    MMC_CAP_UHS_SDR50 | MMC_CAP_UHS_SDR25)) &&
 		   (card->sw_caps.sd3_bus_mode & SD_MODE_UHS_SDR25)) {

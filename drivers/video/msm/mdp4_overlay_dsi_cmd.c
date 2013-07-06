@@ -1076,7 +1076,12 @@ int mdp4_dsi_cmd_off(struct platform_device *pdev)
 
 	/* message for system suspnded */
 	if (cnt > 10)
+	{ //Taylor--20130410--B
 		pr_err("%s:Error,  mdp clocks NOT off\n", __func__);
+		vctrl->clk_control = 1;
+		schedule_work(&vctrl->clk_work);
+		pr_err("%s: After clk_work ; vctrl->clk_enabled=%d\n",__func__,vctrl->clk_enabled);
+	}//Taylor--20130410--E
 	else
 		pr_debug("%s: mdp clocks off at cnt=%d\n", __func__, cnt);
 
